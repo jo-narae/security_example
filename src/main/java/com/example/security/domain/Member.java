@@ -9,33 +9,26 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @EqualsAndHashCode
-@NoArgsConstructor
 @Table(name = "member")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(of = {"id", "oAuth2Id", "email", "nickname", "introduction", "role"})
 public class Member {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
+    @Column(name = "member_id")
     private Long id;
 
-    @Column(name = "email", length = 100, nullable = false)
+    @Column(name = "oauth2_id", unique = true, nullable = false)
+    private String oAuth2Id;
+
+    @Column(unique = true)
     private String email;
 
-    private String password;
+    @Column(unique = true, nullable = false)
+    private String nickname;
 
-    @Column(name = "employee_no", length = 10)
-    private String employeeNo;
+    @Column(name = "profile_image_url")
+    private String profileImageUrl;
 
-    private String name;
-
-    private String position;
-
-    private String telephone;
-
-    private String depart;
-
-    @Column(columnDefinition = "TINYINT", length = 1, nullable = false)
-    private int level;
-
-    @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
+    private String introduction;
 }

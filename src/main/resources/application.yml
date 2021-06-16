@@ -1,0 +1,56 @@
+server:
+  port: 4000
+
+#ddl-auto와 generate-ddl은 한쌍
+#ddl 끌 때 none, false
+#ddl 킬 때 update, true
+spring:
+  datasource:
+    connectionProperties: useUnicode=true;characterEncoding=utf-8;
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+    settings:
+      web-allow-others: true
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    generate-ddl: true
+  jwt:
+    secret: TEST
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            authorization-grant-type: authorization_code
+            client-id: 0c6e2dfcc7e0df58155ad8afba1f90c3
+            client-secret: TxNVIUY2x4SqHpblDBMfCwxnE76EwB6Z
+            redirect-uri: http://localhost:4000/login/oauth2/code/kakao
+            scope:
+              - profile
+              - account_email
+            client-authentication-method: POST
+            client-name: Kakao
+
+        provider:
+
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+logging:
+  level:
+    root: info
