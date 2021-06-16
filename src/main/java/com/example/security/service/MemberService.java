@@ -30,4 +30,8 @@ public class MemberService {
         member.setPassword(encryptHelper.encrypt(member.getPassword()));
         return memberRepository.save(member);
     }
+
+    public void delete(Member member) {
+        memberRepository.delete(member);
+    }
 }

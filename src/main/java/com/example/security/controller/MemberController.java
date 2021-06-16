@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -28,5 +29,19 @@ public class MemberController {
     @PostMapping
     public Member saveMember(@RequestBody Member member) {
         return memberService.save(member);
+    }
+
+    @PutMapping("/{id}")
+    public Member updateMember(@PathVariable("id") long id, @RequestBody Member memberReq) {
+        Member member = memberService.findById(id).orElseThrow(NoSuchElementException::new);
+        member.setNickname(memberReq.getNickname());
+        member.setPassword(memberReq.getPassword());
+        return memberService.save(member);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteMember(@PathVariable("id") long id) {
+        Member member = memberService.findById(id).orElseThrow(NoSuchElementException::new);
+        memberService.delete(member);
     }
 }
