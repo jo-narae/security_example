@@ -26,6 +26,10 @@ public class MemberService {
         return memberRepository.findById(id);
     }
 
+    public Optional<Member> findByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
+
     public Member save(Member member) {
         member.setPassword(encryptHelper.encrypt(member.getPassword()));
         return memberRepository.save(member);

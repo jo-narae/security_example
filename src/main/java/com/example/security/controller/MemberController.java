@@ -26,11 +26,6 @@ public class MemberController {
         return memberService.findById(id);
     }
 
-    @PostMapping
-    public Member saveMember(@RequestBody Member member) {
-        return memberService.save(member);
-    }
-
     @PutMapping("/{id}")
     public Member updateMember(@PathVariable("id") long id, @RequestBody Member memberReq) {
         Member member = memberService.findById(id).orElseThrow(NoSuchElementException::new);

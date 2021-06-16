@@ -31,17 +31,16 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
     // Jwt 토큰 생성
-    public String createToken(Long id, String userId, String userName, String userRole) {
+    public String createToken(Long id, String email, String nickname) {
         Map<String, Object> claims = new LinkedHashMap<>();
         claims.put("userSeq", id);
-        claims.put("userId", userId);
-        claims.put("userName", userName);
-        claims.put("userRole", userRole);
+        claims.put("userId", email);
+        claims.put("userName", nickname);
 
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims) // 데이터
-                .setSubject(userId)
+                .setSubject(email)
                 .setIssuedAt(now) // 토큰 발행일자
                 .setExpiration(new Date(now.getTime() + tokenValidMilisecond)) // set Expire Time
                 .signWith(SignatureAlgorithm.HS256, secretKey) // 암호화 알고리즘, secret값 세팅
