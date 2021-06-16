@@ -1,4 +1,4 @@
-package com.example.security.config;
+package com.example.security.common.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

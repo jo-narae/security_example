@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-public class KaKaoController {
+public class AuthController {
 
     @Autowired
     KakaoService kakaoService;

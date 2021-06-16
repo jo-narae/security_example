@@ -1,4 +1,4 @@
-package com.example.security.config;
+package com.example.security.common.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

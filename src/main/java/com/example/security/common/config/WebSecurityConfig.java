@@ -1,4 +1,4 @@
-package com.example.security.config;
+package com.example.security.common.config;
 
 import com.example.security.service.OAuth2UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests() // 다음 리퀘스트에 대한 사용권한 체크
                 .antMatchers("/h2-console/**").permitAll() // h2 콘솔 잠시 풀어둠
                 .antMatchers("/auth/**").permitAll() // 가입 및 인증 주소는 누구나 접근가능
-                .anyRequest().authenticated() // 그외 나머지 요청은 모두 인증된 회원만 접근 가능
+                //.anyRequest().authenticated() // 그외 나머지 요청은 모두 인증된 회원만 접근 가능
+                .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class) // jwt token 필터를 id/password 인증 필터 전에 넣는다
                 .exceptionHandling()
