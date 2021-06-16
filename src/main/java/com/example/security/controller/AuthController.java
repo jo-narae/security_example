@@ -3,6 +3,7 @@ package com.example.security.controller;
 import com.example.security.common.config.JwtTokenProvider;
 import com.example.security.domain.Member;
 import com.example.security.dto.LoginDTO;
+import com.example.security.service.AuthService;
 import com.example.security.service.KakaoService;
 import com.example.security.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class AuthController {
     MemberService memberService;
 
     @Autowired
+    AuthService authService;
+
+    @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/kakao/login")
@@ -40,11 +44,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(@RequestBody @Valid LoginDTO loginDTO, HttpServletResponse response) {
-        // @TODO( "아이디가 있는지, 비밀번호가 틀렸는지 맞았는지 구현 필요" )
-//        Member member = authService.validUserId(userIdentityRequest.getUserId());
-//        authService.validPassword(userIdentityRequest.getPassword(), member.getPassword());
-
-        Member member = memberService.findByEmail(loginDTO.getEmail()).orElseThrow(NoSuchElementException::new);
+        Member member = authService.validUserId(loginDTO.getEmail());
+        authService.validPassword(loginDTO.getPassword(), member.getPassword());
 
         String accessToken = jwtTokenProvider.createToken(member.getId(), member.getEmail(), member.getNickname());
 
