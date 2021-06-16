@@ -11,17 +11,17 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @Table(name = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id", "oAuth2Id", "email", "nickname", "introduction", "role"})
+@ToString(of = {"id", "oAuth2Id", "email", "nickname", "introduction"})
 public class Member {
 
     @Id @GeneratedValue
-    @Column(name = "member_id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "oauth2_id", unique = true, nullable = false)
     private String oAuth2Id;
 
-    @Column(unique = true)
+    @Column(name = "user_id", unique = true)
     private String email;
 
     @Column(unique = true, nullable = false)

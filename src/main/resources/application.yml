@@ -1,5 +1,9 @@
 server:
   port: 4000
+  error:
+    include-exception: true # 오류 응답에 exception의 내용을 포함할지 여부
+    include-stacktrace: always # 오류 응답에 stacktrace 내용을 포함할 지 여부
+
 
 #ddl-auto와 generate-ddl은 한쌍
 #ddl 끌 때 none, false
@@ -35,7 +39,7 @@ spring:
           kakao:
             authorization-grant-type: authorization_code
             client-id: 0c6e2dfcc7e0df58155ad8afba1f90c3
-            client-secret: TxNVIUY2x4SqHpblDBMfCwxnE76EwB6Z
+            client-secret: pi2ub3Wl3iIeVDrWsjJtZNFTVrKYGVY0
             redirect-uri: http://localhost:4000/login/oauth2/code/kakao
             scope:
               - profile
