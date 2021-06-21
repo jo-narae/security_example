@@ -39,9 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(new RestAuthenticationEntryPoint())
                 .and()
-                .cors()
-                .and()
-                .oauth2Login().userInfoEndpoint().userService(oAuth2UserService);
+                .cors();
 
     }
 
