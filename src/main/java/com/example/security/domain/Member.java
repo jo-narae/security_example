@@ -26,6 +26,6 @@ public class Member {
     @Column(unique = true)
     private String email;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String nickname;
 }

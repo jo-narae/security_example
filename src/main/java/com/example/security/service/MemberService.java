@@ -31,7 +31,7 @@ public class MemberService {
     }
 
     public Member save(Member member) {
-        member.setPassword(encryptHelper.encrypt(member.getPassword()));
+        if(member.getPassword() != null) member.setPassword(encryptHelper.encrypt(member.getPassword()));
         return memberRepository.save(member);
     }
 
