@@ -30,6 +30,10 @@ public class MemberService {
         return memberRepository.findByEmail(email);
     }
 
+    public Optional<Member> findBySocialId(String socialId) {
+        return memberRepository.findBySocialId(socialId);
+    }
+
     public Member save(Member member) {
         if(member.getPassword() != null) member.setPassword(encryptHelper.encrypt(member.getPassword()));
         return memberRepository.save(member);

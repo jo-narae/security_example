@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -34,6 +34,11 @@ public class AuthController {
     public String home(@RequestParam(value = "code", required = false) String code) throws Exception{
         System.out.println("#########" + code);
         return kakaoService.getAccessToken(code);
+    }
+
+    @GetMapping("/social/valid")
+    public Optional<Member> socialValid(@RequestParam(value = "socialId", required = false) String socialId) {
+        return memberService.findBySocialId(socialId);
     }
 
 
