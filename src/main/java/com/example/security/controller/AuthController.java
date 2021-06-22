@@ -8,11 +8,14 @@ import com.example.security.service.KakaoService;
 import com.example.security.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseCookie;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/auth")
@@ -30,15 +33,30 @@ public class AuthController {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    @GetMapping("/kakao/login")
-    public String home(@RequestParam(value = "code", required = false) String code) throws Exception{
-        System.out.println("#########" + code);
-        return kakaoService.getAccessToken(code);
-    }
+    @PostMapping("/kakao/login")
+    public String kakaoLogin(@RequestBody Member req, HttpServletResponse response) {
+        Member member = req;
 
-    @GetMapping("/social/valid")
-    public Optional<Member> socialValid(@RequestParam(value = "socialId", required = false) String socialId) {
-        return memberService.findBySocialId(socialId);
+        try {
+            member = memberService.findBySocialId(req.getSocialId()).orElseThrow(NoSuchElementException::new);
+        } catch (NoSuchElementException e) {
+            Member newMember = new Member(null, req.getSocialId(), null, null, req.getNickname());
+            memberService.save(newMember);
+            member.setSocialId(newMember.getSocialId());
+            member.setNickname(newMember.getNickname());
+        }
+
+        String accessToken = jwtTokenProvider.createToken(member.getId(), member.getEmail(), member.getNickname());
+
+        ResponseCookie cookie = ResponseCookie.from("X-AUTH-TOKEN", accessToken)
+                .domain("localhost")
+                .sameSite("Lax")
+                .maxAge(30 * 60)
+                .build();
+
+        response.addHeader("Set-Cookie", cookie.toString());
+
+        return accessToken;
     }
 
 

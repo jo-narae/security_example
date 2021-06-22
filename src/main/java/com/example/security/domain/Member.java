@@ -1,8 +1,8 @@
 package com.example.security.domain;
 
 import lombok.*;
+
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Builder
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @EqualsAndHashCode
 @Table(name = "member")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @ToString(of = {"id", "socialId", "email", "password", "nickname"})
 public class Member {
 
